@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12">
+        <h2>FishBook</h2>
+        <div class="d-flex col-4
+     justify-content-around">
+            <a href="/new/trip" class="btn btn-primary">Add New Trip</a>
+            <a href="/profile" >Profile</a>
+            <a href="/logout" >Logout</a>
+
+        </div>
+
+    </nav>
+    <div class="col-8 mx-auto">
+        <div class="card col-12 mx-auto justify-content-between bg-dark text-light">
+            {% for trip in trips %}
+            <div>
+                <h3 class="justify-content-between">{{trip.name}} <a href="/users_trip" >User</a></h3>
+                
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">Type: {{trip.type}}</p>
+                <p class="card-text">Bait Used: {{trip.bait_used}}</p>
+                <p class="card-text">Fresh water/ Saltwater: {{trip.water}}</p>
+                <p class="card-text">Date:  {{trip.date.strftime('%Y-%m-%d')}}</p>
+                <p class="card-text">Qty:  {{trip.qty}}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+</body>
+</html>
