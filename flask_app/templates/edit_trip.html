@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12">
+        <h2>Edit Trip</h2>
+        <div class="d-flex col-4
+     justify-content-around">
+            <a href="/new/trip" class="btn btn-primary">Add New Trip</a>
+            <a href="/profile" >Profile</a>
+            <a href="/logout" >Logout</a>
+
+        </div>
+
+    </nav>
+    <form action="/update/trip" method="post" class="col-11 p-4 my-4 bg-dark text-light mx-auto">
+        {% with messages = get_flashed_messages(category_filter=['trip']) %}
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Error</strong>
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="d-flex justify-content-between col-9">
+            <input type="hidden" name="id" value={{edit.id}}>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <input type="text" name="type" class="form-control" value="{{edit.type}}">
+                </div>
+                <div class="form-group">
+                    <label for="bait_used">Bait Used:</label>
+                    <input type="text" name="bait_used" class="form-control" value="{{edit.bait_used}}">
+                </div>
+                <div class="form-group">
+                    <label for="water">Fresh water/ Saltwater:</label>
+                    <input type="text" name="water" class="form-control" value="{{edit.water}}">
+                </div>
+                <div class="form-group">
+                    <label for="water">Date:</label>
+                    <input type="date" name="water" class="form-control" value="{{edit.date}}">
+                </div>
+                <div class="form-group">
+                    <label for="qty">Qty:</label>
+                    <input type="text" name="qty" class="form-control" value="{{edit.qty}}">
+                </div>
+                <input type="submit" value="Edit Trip" class="btn btn-primary">
+                <input type="destroy" value="Delete Trip" class="btn btn-primary">
+            </div>
+            
+        </div>
+    </form>
+</body>
+</html>
