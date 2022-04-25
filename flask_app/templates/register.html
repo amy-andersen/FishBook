@@ -12,7 +12,7 @@
 
 <body>
     <div class="d-flex justify-content-around text-nowrap text-center">
-        <form action="/register" method="post" class="p-4 bg-light text-primary">
+        <form action="/registernewuser" method="post" class="p-4 bg-light text-primary">
             <h2>FishBook Registration</h2>
             {% with messages = get_flashed_messages(category_filter=['register']) %}
             {% if messages %}
@@ -41,11 +41,8 @@
                 <input type="password" name="password" class="form-control">
             </div>
             <div class="form-group d-flex align-items-baseline">
-                <label for="confirm">Confirm Password:</label>
-                <input type="password" name="confirm" class="form-control">
-            </div>
-            <div class="d-flex justify-content-center">
-                <input type="submit" value="Create New Profile" class="btn btn-primary">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" name="confirm_password" class="form-control">
             </div>
             <div class="d-flex justify-content-center">
                 <input type="submit" value="Create New Profile" class="btn btn-primary">
