@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Option</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
     <nav class="d-flex justify-content-between align-items-center col-12">
-        
+
         <div class="d-flex col-0 justify-content-around">
-            <a href="/home" class="btn btn-primary">View All</a>
+            <a href="/trips" class="btn btn-primary">View All</a>
             <a href="/logout" class="btn btn-info">Logout</a>
 
         </div>
@@ -20,52 +23,57 @@
     <form action="/add_trip" method="post" class="col-11 p-4 my-4 bg-dark text-light mx-auto">
         <h2 class="text-primary">Add a New Trip</h2>
         {% with messages = get_flashed_messages(category_filter=['trip']) %}
-            {% if messages %}
-            <div class="alert alert-danger" role="alert">
-                <strong>Error</strong>
-                    {% for message in messages %}
-                    <p>{{message}}</p>
-                    {% endfor %}
-            </div>
-            {% endif %}
+        {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Error</strong>
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% endwith %}
-        
+
         <div class="d-flex justify-content-between col-9">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="species">Type:</label>
-                    <select name="species" class="form-control">
-                        <option value="Bass">Bass</option>
-                        <option value="Trout">Trout</option>
-                        <option value="Walleye">Walleye</option>
-                        <option value="Salmon">Salmon</option>
-                        <option value="Marlin">Marlin</option>
-                        <option value="Tuna">Tuna</option>
-                    </select>
+                    <label for="species">Choose Type of Fish:</label>
+                    <div>
+                        <select name="species">
+                            <option value="" disabled selected hidden>Choose a Type</option>
+                            <option value="Bass">Bass</option>
+                            <option value="Trout">Trout</option>
+                            <option value="Walleye">Walleye</option>
+                            <option value="Salmon">Salmon</option>
+                            <option value="Marlin">Marlin</option>
+                            <option value="Tuna">Tuna</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bait">Bait Used:</label>
+                        <input type="text" name="bait" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="water">Water Type:</label>
+                        <div>
+                            <select name="water">
+                                <option value="" disabled selected hidden>Choose a Type</option>
+                                <option value="Fresh">Fresh</option>
+                                <option value="Salt">Salt</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_trip">Date</label>
+                        <input type="datetime-local" name="date_of_trip" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Qty:</label>
+                        <input type="text" name="quantity" class="form-control">
+                    </div>
+                    <input type="submit" value="Add Trip" class="btn btn-primary">
                 </div>
-                
-                <div class="form-group">
-                    <label for="bait">Bait Used:</label>
-                    <input type="text" name="bait" class="form-control">
-                </div>
-                
-                <div class="form-group">
-                    <label for="water">Fresh water/ Saltwater:</label>
-                    <input type="text" name="water" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="date_of_trip">Date:</label>
-                    <input type="date_of_trip" name="date_of_trip" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="quantity">Qty:</label>
-                    <input type="text" name="quantity" class="form-control">
-                </div>
-                <input type="submit" value="Add Trip" class="btn btn-primary">
             </div>
-        </div>
     </form>
 </body>
+
 </html>

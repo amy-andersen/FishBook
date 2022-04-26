@@ -1,54 +1,63 @@
+# from flask_app.models.trip import trip
+from flask_app.models.user import User
+from flask_app.models.trip import Trip
 from flask_app import app
-from flask import render_template,redirect,request,session
+from flask import render_template, redirect, request, session, flash
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
-from flask_app.models import user
 
-#display page for registration form
-@app.route('/register')
-def register():
+# display page for registration form
+
+
+@app.route('/')
+def index():
     return render_template("register.html")
 
-#post method for registration
-@app.route('/registernewuser', methods=["POST"])
-def add_new_user():
-    # Validate data
-    if not user.User.validate_registration(request.form):
-        return redirect("/") # Send user back to login page
-    # Create the new user
-    data = {
-        "first_name": request.form["first_name"],
-        "last_name": request.form["last_name"],
-        "email": request.form["email"],
-        "password": bcrypt.generate_password_hash(request.form['password']),
-    }
-    # Save new user id in session if successful and send to login page
-    session["user_id"] = user.User.save(data)
-    return redirect("/")
+# post method for registration
 
-#display page for login form
-@app.route('/')
+
+@app.route('/register', methods=['POST'])
+def register():
+
+    if not User.validate_registration(request.form):
+        return redirect('/')
+    data = {
+        "first_name": request.form['first_name'],
+        "last_name": request.form['last_name'],
+        "email": request.form['email'],
+        "password": bcrypt.generate_password_hash(request.form['password'])
+    }
+    id = User.save(data)
+    session['user_id'] = id
+
+    return redirect('/login/page')
+
+
+@app.route('/login/page')
+def login_page():
+    return render_template('login.html')
+
+# post method for login
+
+
+@app.route('/login', methods=['POST'])
 def login():
-    return render_template("login.html")
+    user = User.get_by_email(request.form)
+    if not user:
+        flash("Invalid Email", "login")
+        return redirect('/login')
+    if not bcrypt.check_password_hash(user.password, request.form['password']):
+        flash("Invalid Password", "login")
+        return redirect('/login')
+    session['user_id'] = user.id
+    return redirect('/trips')
 
-#post method for login
-@app.route('/login', methods=["POST"])
-def userlogin():
-    data = {
-        "email": request.form["email"],
-        "password": request.form["password"]
-    }
-    is_valid = user.User.validate_login(data)
-    if is_valid == False: # Invalid input from form, send back to login page
-        return redirect("/")
-    else:
-        session["user_id"] = is_valid # Set session variable = ID, go to home page
-        return redirect("/trips")
+# display page for user profile/ all user's trips
 
-#display page for user profile/ all user's trips
+
 @app.route('/user/<int:id>')
 def show_trips(id):
-    if "user_id" not in session: # If not logged in send to login page
+    if "user_id" not in session:  # If not logged in send to login page
         return redirect("/")
     data = {
         "id": id,
@@ -56,11 +65,23 @@ def show_trips(id):
     user_data = {
         "id": session["user_id"]
     }
-    user_trips = user.User.get_user_with_trips(data)
-    return render_template("user_trips.html", user_trips = user_trips, user=user.User.get_one_user(user_data))
+    return render_template("user_trips.html", user=User.get_user_with_trips(user_data))
 
-#method for logout
+
+@app.route('/trips')
+def trips():
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        'id': session['user_id']
+    }
+    user_trips = User.get_user_with_trips(data)
+    return render_template("all_trips.html", user_trips=user_trips, trips=Trip.get_all_trips_with_comments())
+
+# method for logout
+
+
 @app.route('/logout')
 def logout():
-    session.clear() # Forget user_id
+    session.clear()  # Forget user_id
     return redirect("/")

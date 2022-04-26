@@ -5,9 +5,11 @@ name = "pypi"
 
 [packages]
 pymysql = "*"
-flask = "*"
+flask = "==2.0.3"
+werkzeug = "==2.0.3"
+flask-bcrypt = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "*"
