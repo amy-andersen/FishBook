@@ -23,7 +23,7 @@
         <div class="card col-12 mx-auto justify-content-between bg-dark text-light">
             {% for trip in trips %}
             <div>
-                <h3 class="justify-content-between">{{trip.date_of_trip}} Trip<a href="/user/{{trip.user_id}}" >User</a></h3>
+                <h3> <a href="/user/{{trip.user_id}}" >{{user.first_name}}'s {{trip.species}} Trip</a></h3>
                 
             </div>
 
@@ -31,7 +31,7 @@
                 <p class="card-text">Type: {{trip.species}}</p>
                 <p class="card-text">Bait Used: {{trip.bait}}</p>
                 <p class="card-text">Fresh water/ Saltwater: {{trip.water}}</p>
-                <p class="card-text">Date:  {{trip.date_of_trip.strftime('%Y-%m-%d')}}</p>
+                <p class="card-text">Date:  {{trip.date_of_trip.strftime('%m-%d-%Y')}}</p>
                 <p class="card-text">Qty:  {{trip.quantity}}</p>
                 {% endfor %}
             </div>
