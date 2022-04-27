@@ -16,6 +16,7 @@ class Trip:
         self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.first_name = ""
         self.comments = []
 
 # insert a new trip to db
@@ -39,11 +40,12 @@ class Trip:
 # get all trips with all comments
     @classmethod
     def get_all_trips_with_comments(cls):
-        query = "SELECT * FROM trips;"
+        query = "SELECT * FROM trips LEFT JOIN users on trips.user_id = users.id;"
         results = connectToMySQL(cls.db_name).query_db(query)
         trips = []
         for db_row in results:
             trip = cls(db_row)
+            trip.first_name = db_row["first_name"]
             trip.comments = Comment.get_one_trip_comments(
                 {"trip_id": db_row["id"]})
             trips.append(trip)

@@ -65,7 +65,7 @@ def show_trips(id):
     user_data = {
         "id": session["user_id"]
     }
-    return render_template("user_trips.html", user=User.get_user_with_trips(user_data))
+    return render_template("user_trips.html", user=User.get_user_with_trips(data))
 
 
 @app.route('/trips')

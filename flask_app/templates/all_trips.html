@@ -6,31 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Trips</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body>
-    <nav class="d-flex justify-content-between align-items-center col-12">
+<body class="bg-all_trips">
+    <nav class="d-flex justify-content-between align-items-center col-12 text-light">
         <h2>FishBook</h2>
         <div class="d-flex col-4 justify-content-around">
             <a href="/new" class="btn btn-primary">Add New Trip</a>
             <a href="/user/{{session.user_id}}">Profile</a>
             <a href="/logout">Logout</a>
-
         </div>
-
     </nav>
-    <div class="col-8 mx-auto">
-        <div class="card text-nowrap justify-content-between bg-dark text-light">
+    <div class="col-8 mx-auto text-light">
+        <div class="text-nowrap justify-content-between">
             {% for trip in trips %}
-            <div>
-                <h3 class="justify-content-between">User <a href="/user/{{trip.user_id}}">{{trip.user_id}}</a></h3>
+            <div class="mt-2">
+                <h3 class="justify-content-between"><a href=" /user/{{trip.user_id}}">{{trip.first_name}}'s Trip</a>
+                </h3>
                 <p class="card-text">Type: {{trip.species}}</p>
                 <p class="card-text">Bait Used: {{trip.bait}}</p>
                 <p class="card-text">Fresh water/ Saltwater: {{trip.water}}</p>
                 <p class="card-text">Date: {{trip.date_of_trip.strftime('%B,%d,%Y')}}</p>
                 <p class="card-text">Qty: {{trip.quantity}}</p>
+                {% for comment in trip.comments%}
+                <p>{{comment.comments}}</p>
+                {%endfor%}
+                <a href="/new/comment/{{trip.id}}">Comment</a>
                 {% endfor %}
             </div>
         </div>

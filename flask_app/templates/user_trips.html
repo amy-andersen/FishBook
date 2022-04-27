@@ -6,13 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Trips</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body>
-    <nav class="d-flex justify-content-between align-items-center col-12">
+<body class="bg-user_trips">
+    <nav class="d-flex justify-content-between align-items-center col-12 text-light">
+        {% if session.user_id == user.id %}
         <h2>My Trips</h2>
+        {%else%}
+        <h2>{{user.first_name}}'s Trips</h2>
+        {%endif%}
         <div class="d-flex col-4 justify-content-around">
             <a href="/new" class="btn btn-primary">Add New Trip</a>
             <a href="/trips">Home</a>
@@ -20,11 +25,12 @@
         </div>
     </nav>
     <div class="col-8 mx-auto">
-        <div class="card text-nowrap justify-content-between bg-dark text-light">
+        <div class="text-nowrap justify-content-between text-light">
             {% for trip in user.trips %}
             <div class="d-flex justify-content-between">
-                <h3 class="justify-content-between">User <a href="/user/{{trip.user_id}}">{{trip.user_id}}</a></h3>
-                <a href="/edit/trip/{{trip.id}}">Edit Trip</a>
+                {% if session.user_id == user.id %}
+                <a href="/edit/{{trip.id}}">Edit Trip</a>
+                {%endif%}
             </div>
             <div>
                 <p class="card-text">Type: {{trip.species}}</p>
